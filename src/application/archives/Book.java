@@ -1,58 +1,71 @@
 package application.archives;
 
+
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Book {
+public class Book implements Serializable {
 
-    String bookName;
-    String authorName;
-    String category;
-    String about;
-    Calendar returnDate;
+    private String _bookTitle;
+    private String _authorName;
+    private String _category;
+    private String _description;
+//    private User _BorrowedTo;
 
+    private boolean _available;
+    private Calendar _returnDate;
 
-    public Book(String bookName, String authorName, String category) {
-        this.bookName = bookName;
-        this.authorName = authorName;
-        this.category = category;
+    public Book(String bookTitle, String authorName, String category, boolean available, String description) {
+        _bookTitle = bookTitle;
+        _authorName = authorName;
+        _category = category;
+        _available = available;
+        _description = description;
+    }
+/*
+    public User getBorrowedTo() {
+        return _BorrowedTo;
     }
 
-    public String getBookName() {
-        return bookName;
+    public void setBorrowedTo(User borrowedTo) {
+        _BorrowedTo = borrowedTo;
+    }
+*/
+    public String getBookTitle() {
+        return _bookTitle;
     }
 
     public String getAuthorName() {
-
-        return authorName;
+        return _authorName;
     }
 
     public String getCategory() {
-        return category;
+        return _category;
     }
 
-    public String getAbout() {
-        return about;
+    public String getDescription() {
+        return _description;
     }
 
-    public void setAbout(String about) {
-        this.about = about;
+    public boolean getAvailable() {
+        return _available;
+    }
+
+    public void setAvailable(boolean available) {
+        _available = available;
+    }
+
+    public void setDescription(String about) {
+        _description = about;
     }
 
     public Calendar getReturnDate() {
-        return returnDate;
+        return _returnDate;
     }
 
     public void setReturnDate(Calendar returnDate) {
-        this.returnDate = returnDate;
+        this._returnDate = returnDate;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "authorName='" + authorName + '\'' +
-                ", bookName='" + bookName + '\'' +
-                ", category='" + category + '\'' +
-                '}';
-    }
 }
 

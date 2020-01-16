@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="370.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.BookInfoController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="281.0" layoutX="5.0" layoutY="60.0" stroke="TRANSPARENT" strokeType="INSIDE" width="359.0" />
+      <Label layoutX="14.0" layoutY="14.0" text="Book Name:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="lblName" layoutX="87.0" layoutY="14.0" text="Label" />
+      <Label layoutX="39.0" layoutY="31.0" text="Author:">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font></Label>
+      <Label fx:id="lblAuthor" layoutX="87.0" layoutY="31.0" text="Label" />
+      <Label layoutX="161.0" layoutY="48.0" text="Synopsis">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="lblsynopsis" layoutX="15.0" layoutY="70.0" maxWidth="340.0" text="Label" wrapText="true" />
+      <Button fx:id="btnClose" layoutX="305.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#mouse_Click" text="Close" />
+      <Line endX="130.0" layoutX="5.0" layoutY="60.0" startX="1.0" strokeMiterLimit="5.0" />
+      <Line endX="359.0" layoutX="5.0" layoutY="60.0" startX="223.0" strokeMiterLimit="5.0" />
+      <Line endX="359.0" layoutX="5.0" layoutY="340.0" startX="1.0" strokeMiterLimit="5.0" />
+      <Line endX="1.0" endY="40" layoutX="5.0" layoutY="300.0" startX="1.0" startY="-239.5" strokeMiterLimit="5.0" />
+      <Line endX="359.0" endY="40" layoutX="5.0" layoutY="300.0" startX="359.0" startY="-239.5" strokeMiterLimit="5.0" />
+   </children>
+</AnchorPane>

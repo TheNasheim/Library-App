@@ -18,6 +18,7 @@ public class FileUtility {
     public static Object loadObject(String filename) {
         Path path = Paths.get(filename);
         try (ObjectInputStream in = new ObjectInputStream(Files.newInputStream(path))) {
+            String srt = "";
             return in.readObject();
         } catch (Exception e) {
             e.printStackTrace();
