@@ -1,4 +1,4 @@
-package application;
+package application.archives;
 
 import application.archives.Book;
 import javafx.fxml.FXML;
@@ -14,7 +14,7 @@ public class BookInfoController {
     public Button btnClose;
     public Label lblName;
     public Label lblAuthor;
-    public Label lblsynopsis;
+    public Label lblSynopsis;
 
 
     public void initializeGUI(Book book){
@@ -27,7 +27,7 @@ public class BookInfoController {
             lblName.setText(book.getBookTitle());
 
     lblAuthor.setText(book.getAuthorName());
-    lblsynopsis.setText(book.getDescription());
+    lblSynopsis.setText(book.getDescription());
     }
 
 

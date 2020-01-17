@@ -39,7 +39,7 @@
                     <VBox.margin>
                         <Insets bottom="15.0" />
                     </VBox.margin></Label>
-                    <Button fx:id="btn" mnemonicParsing="false" onMouseClicked="#onReturn_Click" prefHeight="25.0" prefWidth="105.0" text="Add new book">
+                    <Button fx:id="btnAddnewBook" mnemonicParsing="false" onMouseClicked="#onAddNewBook_Click" prefHeight="25.0" prefWidth="105.0" text="Add new book">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin></Button>

@@ -1,9 +1,7 @@
 package application;
 
-import application.archives.Book;
-import application.archives.BookManager;
-import application.archives.UserManager;
-import application.archives.UserRights;
+import application.archives.*;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
+import javafx.stage.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -38,10 +36,15 @@ public class ProgramController {
         _bookManager = new BookManager();
         createNewBooks();
         displayBookTable();
-        searchBooks();
+        displayUserInfo();
         btnReturn.setDisable(true);
+    }
+
+    private void displayUserInfo(){
         lblUserName.setText(_userManager.getActiveUser().getName());
         lblUserStatus.setText(_userManager.getActiveUser().getRights().toString());
+        if(_userManager.getActiveUser().getRights() == UserRights.ADMIN)
+            adminSetup();
     }
 
     private void adminSetup(){
@@ -88,6 +91,7 @@ public class ProgramController {
         tvListofObjects.getColumns().add(column2);
         tvListofObjects.getColumns().add(column3);
         tvListofObjects.getColumns().add(column4);
+        searchBooks();
     }
 
     /**
@@ -114,7 +118,7 @@ public class ProgramController {
 
     public void onReadMore_Click(MouseEvent mouseEvent) throws IOException {
         Book selectedBook = (Book)tvListofObjects.getSelectionModel().getSelectedItem();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BookInfo.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("archives/BookInfo.fxml"));
         Parent root = fxmlLoader.load();
         BookInfoController controller = fxmlLoader.<BookInfoController>getController();
         controller.initializeGUI(selectedBook);
@@ -186,6 +190,29 @@ public class ProgramController {
         ArrayList<Book> books = _bookManager.getMyBorrowedBooks(_userManager.getActiveUser());
         setNewStatus("Displaying users borrowed books.");
         displayBooks(books);
+    }
+
+    public void onAddNewBook_Click(MouseEvent mouseEvent) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("archives/AddNewBook.fxml"));
+        Parent root = fxmlLoader.load();
+        AddNewBookController controller = fxmlLoader.<AddNewBookController>getController();
+        Stage stage = new Stage();
+        stage.setTitle("Add new books");
+        stage.setScene(new Scene(root, 360 , 450));
+        stage.setResizable(false);
+        stage.show();
+
+        stage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                setNewStatus("test");
+               /* Book getNewBookBeforeClose = controller.getNewBook();
+                if(getNewBookBeforeClose != null){
+                    _bookManager.add(getNewBookBeforeClose);
+                    displayBookTable();
+                }*/
+            }
+        });
     }
 }
 
