@@ -18,7 +18,14 @@ public class BookInfoController {
 
 
     public void initializeGUI(Book book){
-    lblName.setText(book.getBookTitle());
+        if(book.getBookTitle().length() > 40){
+            String title = book.getBookTitle();
+            int index =  title.substring(40).indexOf(" ") + 40;
+            title = title.substring(0,index) + "\n" + title.substring(index + 1, title.length());
+            lblName.setText(title);
+        }else
+            lblName.setText(book.getBookTitle());
+
     lblAuthor.setText(book.getAuthorName());
     lblsynopsis.setText(book.getDescription());
     }

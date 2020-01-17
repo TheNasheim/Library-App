@@ -27,18 +27,25 @@ public class ProgramController {
     public Button btnBorrow;
     public TableView tvListofObjects;
     public CheckBox cbAvailable;
+    public Label lblUserName;
+    public Label lblUserStatus;
 
     private BookManager _bookManager;
     private UserManager _userManager;
 
     public void initializeGUI(UserManager userManager){
-
         this._userManager = userManager;
         _bookManager = new BookManager();
         createNewBooks();
         displayBookTable();
         searchBooks();
         btnReturn.setDisable(true);
+        lblUserName.setText(_userManager.getActiveUser().getName());
+        lblUserStatus.setText(_userManager.getActiveUser().getRights().toString());
+    }
+
+    private void adminSetup(){
+
     }
 
     /**

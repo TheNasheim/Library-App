@@ -32,9 +32,9 @@ public class LoginController {
             ProgramController controller = fxmlLoader.<ProgramController>getController();
             controller.initializeGUI(userManager);
             Stage stage = new Stage();
-            String title = String.format("Library App " +  "   " + "User Loggin: %s", txtUserName.getText());
+            String title = String.format("Library App");
             stage.setTitle(title);
-            stage.setScene(new Scene(root, 700 , 500));
+            stage.setScene(new Scene(root, 720 , 505));
             stage.setResizable(false);
             stage.show();
 

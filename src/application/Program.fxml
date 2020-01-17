@@ -1,32 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProgramController">
+<GridPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ProgramController">
     <children>
-        <AnchorPane prefHeight="500.0" prefWidth="700.0" GridPane.rowIndex="1">
+        <AnchorPane prefHeight="505.0" prefWidth="720.0">
          <children>
 
-             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="70.0" layoutX="190.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="405.0" />
-             <Rectangle arcHeight="1.0" arcWidth="1.0" fill="#ffffff00" height="60.0" layoutX="195.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" width="90.0" />
-            <CheckBox fx:id="cbAvailable" layoutX="230.0" layoutY="18.0" mnemonicParsing="false" />
-            <Label layoutX="200.0" layoutY="37.0" text="Show available &#10;books only" textAlignment="CENTER" />
-            <TextField fx:id="txtSearch" layoutX="295.0" layoutY="40.0" prefHeight="25.0" prefWidth="232.0" />
-            <Button layoutX="535.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#onSearch_Click" text="Search" />
-            <Button layoutX="603.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#onMyBorrowedBooks_Click" text="Show &#10;my borrowed&#10; books" prefWidth="92.0" textAlignment="CENTER" />
+             <Rectangle arcHeight="15.0" arcWidth="15.0" fill="WHITE" height="75.0" layoutX="5.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="180.0" />
+             <Label layoutX="10.0" layoutY="35.0" text="User Name:" />
+             <Label layoutX="10.0" layoutY="55.0" text="User Status:" />
+             <Label fx:id="lblUserName" layoutX="80.0" layoutY="35.0" text="lblName" />
+             <Label fx:id="lblUserStatus" layoutX="80.0" layoutY="55.0" text="lblUserStatus" />
 
-            <TableView fx:id="tvListofObjects" layoutX="14.0" layoutY="85.0" onMouseClicked="#tvListofObjects_Click" prefHeight="390.0" prefWidth="580.0" />
-            <Button fx:id="btnRead" layoutX="603.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#onReadMore_Click" prefHeight="40.0" prefWidth="92.0" text="  Read more &#10;   Info" textAlignment="CENTER" />
-            <Button fx:id="btnBorrow" layoutX="603.0" layoutY="435.0" mnemonicParsing="false" onMouseClicked="#onBorrow_Click" prefHeight="25.0" prefWidth="92.0" text="Borrow Book" />
-            <Button fx:id="btnReturn" layoutX="603.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#onReturn_Click" prefHeight="25.0" prefWidth="92.0" text="Return Book" />
-            <Label fx:id="lblStatus" layoutX="14.0" layoutY="478.0" text="Status:">
+             <Rectangle arcHeight="15.0" arcWidth="15.0" fill="WHITE" height="75.0" layoutX="190.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="525.0" />
+             <Rectangle arcHeight="10.0" arcWidth="10.0" fill="WHITE" height="65.0" layoutX="195.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="90.0" />
+             <CheckBox fx:id="cbAvailable" layoutX="230.0" layoutY="13.0" mnemonicParsing="false" />
+             <Label layoutX="200.0" layoutY="35.0" text="Show available &#10;books only" textAlignment="CENTER" />
+             <TextField fx:id="txtSearch" layoutX="295.0" layoutY="10.0" prefHeight="25.0" prefWidth="232.0" />
+             <Button layoutX="535.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onSearch_Click" text="Search" />
+             <Button layoutX="605.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onMyBorrowedBooks_Click" prefHeight="65.0" prefWidth="105.0" text="Show &#10;my borrowed&#10; books" textAlignment="CENTER" />
+
+             <Rectangle arcHeight="15.0" arcWidth="15.0" fill="WHITE" height="400.0" layoutX="5.0" layoutY="85.0" stroke="BLACK" strokeType="INSIDE" width="590.0" />
+             <TableView fx:id="tvListofObjects" layoutX="10.0" layoutY="90.0" onMouseClicked="#tvListofObjects_Click" prefHeight="390.0" prefWidth="580.0" />
+
+             <Rectangle arcHeight="15.0" arcWidth="15.0" fill="WHITE" height="400.0" layoutX="600.0" layoutY="85.0" stroke="BLACK" strokeType="INSIDE" width="115.0" />
+             <Button fx:id="btnRead" layoutX="605.0" layoutY="90.0" mnemonicParsing="false" onMouseClicked="#onReadMore_Click" prefHeight="40.0" prefWidth="105.0" text="  Read more &#10;   Info" textAlignment="CENTER" />
+             <Button fx:id="btnBorrow" layoutX="605.0" layoutY="135.0" mnemonicParsing="false" onMouseClicked="#onBorrow_Click" prefHeight="25.0" prefWidth="105.0" text="Borrow Book" />
+             <Button fx:id="btnReturn" layoutX="605.0" layoutY="165.0" mnemonicParsing="false" onMouseClicked="#onReturn_Click" prefHeight="25.0" prefWidth="105.0" text="Return Book" />
+
+             <VBox fx:id="vbAdmin" layoutX="605.0" layoutY="200.0" prefHeight="200.0" prefWidth="113.0">
+                <children>
+                    <Label text="     ADMIN Screen   " textAlignment="CENTER" underline="true">
+                    <VBox.margin>
+                        <Insets bottom="15.0" />
+                    </VBox.margin></Label>
+                    <Button fx:id="btn" mnemonicParsing="false" onMouseClicked="#onReturn_Click" prefHeight="25.0" prefWidth="105.0" text="Add new book">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin></Button>
+                    <Button fx:id="btn2" mnemonicParsing="false" onMouseClicked="#onReturn_Click" prefHeight="25.0" prefWidth="105.0" text="Remove book">
+                    <VBox.margin>
+                        <Insets bottom="25.0" />
+                    </VBox.margin></Button>
+             <Button fx:id="btn3" mnemonicParsing="false" onMouseClicked="#onReturn_Click" prefHeight="25.0" prefWidth="105.0" text="Show all users">
+                 <VBox.margin>
+                     <Insets bottom="5.0" />
+                 </VBox.margin></Button>
+             <Button fx:id="btn4" mnemonicParsing="false" onMouseClicked="#onReturn_Click" prefHeight="50.0" prefWidth="105.0" text="Show all &#10;borrowed books" textAlignment="CENTER">
+             <VBox.margin>
+                 <Insets bottom="5.0" />
+             </VBox.margin></Button>
+                </children>
+             </VBox>
+
+             <Label fx:id="lblStatus" layoutX="10.0" layoutY="485.0" text="Status:">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
+
          </children>
         </AnchorPane>
 
