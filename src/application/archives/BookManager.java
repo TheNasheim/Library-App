@@ -32,8 +32,45 @@ public class BookManager {
         books = booksIn;
     }
 
-    public ArrayList<Book> getAllBooks(){
-        return books;
+    public ArrayList<Book> getBooks(String strIn, boolean available){
+        if(!available){
+            if(strIn.isEmpty()){
+                return books;
+            }
+            else { // returns all searched books.
+                ArrayList<Book> otherBooks = new ArrayList<>();
+                for(Book book : books){
+                    if(book.getAvailable()) otherBooks.add(book);
+                }
+                return otherBooks;
+            }
+        }
+        else{
+            if(strIn.isEmpty()){ // Returns all available books
+                ArrayList<Book> otherBooks = new ArrayList<>();
+                for(Book book : books){
+                    if(book.getAvailable()) otherBooks.add(book);
+                }
+                return otherBooks;
+            }
+            else { // returns all available searched books.
+                ArrayList<Book> otherBooks = new ArrayList<>();
+                for(Book book : books){
+                    if(book.getAvailable()) {
+                        if (book.getBookTitle().contains(strIn)) otherBooks.add(book);
+                        else if (book.getAuthorName().contains(strIn)) otherBooks.add(book);
+                    }
+                }
+                return otherBooks;
+            }
+        }
+    }
+    public ArrayList<Book> getMyBorrowedBooks(User activeUser) {
+        ArrayList<Book> otherBooks = new ArrayList<>();
+        for(Book book : books){
+            if(book.getBorrowedTo() == activeUser) otherBooks.add(book);
+        }
+        return otherBooks;
     }
 
     public boolean borrowSelectedBook(Book selectedBook, User userWhoBorrows) {

@@ -87,7 +87,7 @@ public class UserManager {
         this.activeUser = activeUser;
     }
 
-
+    public UserRights getActiveUserRights() { return activeUser.getRights(); }
 
     public ArrayList<User> getAllUsers(){
         return users;
