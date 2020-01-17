@@ -24,7 +24,7 @@ public class LoginController {
     public void btnLoginClick(ActionEvent actionEvent) {
 
         UserManager userManager = new UserManager();
-        User user = userManager.findUserbyName(txtUserName.getText());
+        User user = userManager.getUserbyName(txtUserName.getText());
         userManager.setActiveUser(user);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Program.fxml"));

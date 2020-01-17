@@ -17,7 +17,7 @@ public class UserManager {
         loadUsers();
     }
 
-    public User findUser(String searchName) {
+    public User getUserbyName(String searchName) {
         User user;
         if(users.stream().anyMatch(x -> x.getName().equals(searchName))) {
             user =  users.stream().filter((d) -> d.getName().equals(searchName)).findFirst().get();
@@ -67,13 +67,16 @@ public class UserManager {
         users = usersIn;
     }
 
-    public User findUserbyName(String name){
+    public User getUserbyNamesss(String name){
         for(User user : users){
             if(user.getName().contains(name)){
                 return user;
             }
         }
-        return null;
+        User newUser = new User(name, UserRights.NORMAL);
+        add(newUser);
+        saveUsers();
+        return newUser;
     }
 
     public User getActiveUser() {
@@ -83,6 +86,8 @@ public class UserManager {
     public void setActiveUser(User activeUser) {
         this.activeUser = activeUser;
     }
+
+
 
     public ArrayList<User> getAllUsers(){
         return users;
@@ -100,7 +105,7 @@ public class UserManager {
     }
 
     public void saveUsers(){
-        FileUtility.saveObject("users.src", users, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        FileUtility.saveObject("users.src", users, StandardOpenOption.CREATE);
     }
 
 

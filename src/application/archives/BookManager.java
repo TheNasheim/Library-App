@@ -12,7 +12,8 @@ public class BookManager {
     private ArrayList<Book> books;
 
     public BookManager() {
-        loadBooks();
+       // loadBooks();
+        books = new ArrayList<>();
     }
 
     public void add(Book bookIn){
@@ -33,6 +34,32 @@ public class BookManager {
 
     public ArrayList<Book> getAllBooks(){
         return books;
+    }
+
+    public boolean borrowSelectedBook(Book selectedBook, User userWhoBorrows) {
+        boolean done = false;
+        if(userWhoBorrows == null)
+            return done;
+        for(Book book : books){
+            if(book.getBookTitle().equals(selectedBook.getBookTitle()) && book.getAvailable()){
+                book.setBorrowedTo(userWhoBorrows);
+                book.setAvailable(false);
+                done = true;
+                break;
+            }
+        }
+        return done;
+    }
+    public boolean returnSelectedBook(Book selectedBook) {
+        boolean done = false;
+        for(Book book : books){
+            if(book.getBookTitle().equals(selectedBook.getBookTitle())){
+                book.setBorrowedTo(null);
+                book.setAvailable(true);
+                done = true;
+            }
+        }
+        return done;
     }
 
     public ArrayList<Book> getCategoryOfBooks(String category){
@@ -56,7 +83,7 @@ public class BookManager {
     }
 
     public void saveBooks(){
-        FileUtility.saveObject("books.src", books, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        FileUtility.saveObject("books.src", books, StandardOpenOption.CREATE);
     }
 
 
