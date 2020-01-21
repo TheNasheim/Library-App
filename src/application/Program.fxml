@@ -12,10 +12,12 @@
          <children>
 
              <Rectangle arcHeight="15.0" arcWidth="15.0" fill="WHITE" height="75.0" layoutX="5.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="180.0" />
-             <Label layoutX="10.0" layoutY="35.0" text="User Name:" />
-             <Label layoutX="10.0" layoutY="55.0" text="User Status:" />
-             <Label fx:id="lblUserName" layoutX="80.0" layoutY="35.0" text="lblName" />
-             <Label fx:id="lblUserStatus" layoutX="80.0" layoutY="55.0" text="lblUserStatus" />
+             <Label layoutX="10.0" layoutY="10.0" text="User Name:" />
+             <Label layoutX="10.0" layoutY="30.0" text="User Status:" />
+             <Label layoutX="10.0" layoutY="30.0" text="Book Count:" />
+             <Label fx:id="lblUserName" layoutX="80.0" layoutY="10.0" text="lblName" />
+             <Label fx:id="lblUserStatus" layoutX="80.0" layoutY="30.0" text="lblUserStatus" />
+             <Label fx:id="lblBookCounts" layoutX="80.0" layoutY="30.0" text="lblUserStatus" />
 
              <Rectangle arcHeight="15.0" arcWidth="15.0" fill="WHITE" height="75.0" layoutX="190.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="525.0" />
              <Rectangle arcHeight="10.0" arcWidth="10.0" fill="WHITE" height="65.0" layoutX="195.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="90.0" />
@@ -43,15 +45,19 @@
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin></Button>
-                    <Button fx:id="btn2" mnemonicParsing="false" onMouseClicked="#onReturn_Click" prefHeight="25.0" prefWidth="105.0" text="Remove book">
+                    <Button fx:id="btnRemoveBook" mnemonicParsing="false" onMouseClicked="#onRemoveBook_Click" prefHeight="25.0" prefWidth="105.0" text="Remove book">
                     <VBox.margin>
                         <Insets bottom="25.0" />
                     </VBox.margin></Button>
-             <Button fx:id="btn3" mnemonicParsing="false" onMouseClicked="#onReturn_Click" prefHeight="25.0" prefWidth="105.0" text="Show all users">
+                    <Button fx:id="btnDispBooks" mnemonicParsing="false" onMouseClicked="#onDispBooks_Click" prefHeight="25.0" prefWidth="105.0" text="Display books">
+                        <VBox.margin>
+                            <Insets bottom="5.0" />
+                        </VBox.margin></Button>
+             <Button fx:id="btnDispUsers" mnemonicParsing="false" onMouseClicked="#onDispUsers_Click" prefHeight="25.0" prefWidth="105.0" text="Display users">
                  <VBox.margin>
                      <Insets bottom="5.0" />
                  </VBox.margin></Button>
-             <Button fx:id="btn4" mnemonicParsing="false" onMouseClicked="#onReturn_Click" prefHeight="50.0" prefWidth="105.0" text="Show all &#10;borrowed books" textAlignment="CENTER">
+             <Button fx:id="btnDispBorrowedBooks" mnemonicParsing="false" onMouseClicked="#onDispBorrowedBooks_Click" minHeight="50.0" prefWidth="105.0" text="Show all &#10;borrowed books" textAlignment="CENTER">
              <VBox.margin>
                  <Insets bottom="5.0" />
              </VBox.margin></Button>

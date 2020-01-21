@@ -37,7 +37,6 @@ public class UserManager {
                 return user;
             }
         }
-        //return null;
     }
 
     public String findUserString(String searchName) {
@@ -94,8 +93,7 @@ public class UserManager {
     }
 
     public void loadUsers() {
-        Path path;
-        path = Paths.get("users.src");
+        Path path = Paths.get("users.src");
         if (Files.exists(path))
             users = (ArrayList<User>) FileUtility.loadObject("users.src");
         else {

@@ -10,7 +10,8 @@ public class Book implements Serializable {
     private String _authorName;
     private String _category;
     private String _description;
-    private User _BorrowedTo;
+    private String _borrowedToName;
+    private User _BorrowedToUser;
 
     private boolean _available;
     private Calendar _returnDate;
@@ -21,18 +22,26 @@ public class Book implements Serializable {
         _category = category;
         _available = available;
         _description = description;
+        _borrowedToName = "";
     }
 
-    public User getBorrowedTo() {
-        return _BorrowedTo;
+    public String getBorrowedToName() {
+        return _borrowedToName;
+    }
+
+    public User getBorrowedToUser() {
+        return _BorrowedToUser;
     }
 
     public void setBorrowedTo(User borrowedTo) {
-        if(borrowedTo == null)
-            setAvailable(true);
+        if(borrowedTo == null){
+            _BorrowedToUser = null;
+            _borrowedToName = "";
+            setAvailable(true);}
         else{
             setAvailable(false);
-            _BorrowedTo = borrowedTo;
+            _BorrowedToUser = borrowedTo;
+            _borrowedToName = borrowedTo.getName();
         }
     }
 

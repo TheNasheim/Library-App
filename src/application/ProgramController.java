@@ -4,12 +4,14 @@ import application.archives.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -27,11 +29,17 @@ public class ProgramController {
     public CheckBox cbAvailable;
     public Label lblUserName;
     public Label lblUserStatus;
+    public Label lblBookCounts;
+    public VBox vbAdmin;
+
 
     private BookManager _bookManager;
     private UserManager _userManager;
+    private String activeTable;
 
     public void initializeGUI(UserManager userManager){
+        vbAdmin.setVisible(false);
+        activeTable = "Book";
         this._userManager = userManager;
         _bookManager = new BookManager();
         createNewBooks();
@@ -48,7 +56,7 @@ public class ProgramController {
     }
 
     private void adminSetup(){
-
+        vbAdmin.setVisible(true);
     }
 
     /**
@@ -67,13 +75,15 @@ public class ProgramController {
     }
 
     private void displayBookTable(){
-        TableColumn<String, Book> column1 = new TableColumn<>("Book Title");
+        tvListofObjects.getItems().clear();
+        tvListofObjects.getColumns().clear();
+        TableColumn<Book, String> column1 = new TableColumn<>("Book Title");
         column1.setPrefWidth(300f);
         column1.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
-        TableColumn<String, Book> column2 = new TableColumn<>("Author Name");
+        TableColumn<Book, String> column2 = new TableColumn<>("Author Name");
         column2.setPrefWidth(100f);
         column2.setCellValueFactory(new PropertyValueFactory<>("authorName"));
-        TableColumn<String, Book> column3 = new TableColumn<>("Category");
+        TableColumn<Book, String> column3 = new TableColumn<>("Category");
         column3.setPrefWidth(100f);
         column3.setCellValueFactory(new PropertyValueFactory<>("category"));
         TableColumn<Book, Boolean> column4 = new TableColumn<>("Available");
@@ -106,6 +116,77 @@ public class ProgramController {
     }
 
     private void displayBooks(ArrayList<Book> books){
+        tvListofObjects.getItems().clear();
+        if(books.size() > 0) {
+            for (Book book : books) {
+                tvListofObjects.getItems().add(book);
+            }
+            tvListofObjects.getSelectionModel().selectFirst();
+            getIsBookBorrowed();
+        }
+    }
+
+    private void displayUserTable(){
+        tvListofObjects.getItems().clear();
+        tvListofObjects.getColumns().clear();
+
+        TableColumn<String, User> column1 = new TableColumn<>("User Name");
+        column1.setPrefWidth(300f);
+        column1.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<String, Book> column2 = new TableColumn<>("User Rights");
+        column2.setPrefWidth(100f);
+        column2.setCellValueFactory(new PropertyValueFactory<>("rights"));
+        tvListofObjects.getColumns().add(column1);
+        tvListofObjects.getColumns().add(column2);
+        searchUsers();
+    }
+
+    private void searchUsers(){
+        String search = txtSearch.getText();
+        ArrayList<User> users = _userManager.getAllUsers();
+        displayUsers(users);
+    }
+
+    private void displayUsers(ArrayList<User> users){
+        tvListofObjects.getItems().clear();
+        if(users.size() > 0){
+            for(User user : users){
+                tvListofObjects.getItems().add(user);
+            }
+            tvListofObjects.getSelectionModel().selectFirst();
+        }
+    }
+
+    private void displayBorrowedBookTable(){
+        tvListofObjects.getItems().clear();
+        tvListofObjects.getColumns().clear();
+        TableColumn<String, Book> column1 = new TableColumn<>("Book Title");
+        column1.setPrefWidth(300f);
+        column1.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
+        TableColumn<Book, Boolean> column2 = new TableColumn<>("Available");
+        column2.setPrefWidth(60f);
+        column2.setCellValueFactory(new PropertyValueFactory<>("available"));
+        column2.setCellFactory(col -> new TableCell<Book, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : item ? "YES" : "NO" );
+            }
+        });
+        column2.setStyle("-fx-alignment: CENTER;");
+        TableColumn<Book, String> column3 = new TableColumn<>("Borrowed to");
+        column3.setPrefWidth(100f);
+        column3.setCellValueFactory(new PropertyValueFactory<>("BorrowedToName"));
+        column3.setStyle("-fx-alignment: CENTER;");
+
+        tvListofObjects.getColumns().add(column1);
+        tvListofObjects.getColumns().add(column2);
+        tvListofObjects.getColumns().add(column3);
+        searchBooks();
+    }
+
+    private void dispBorrowedBooks() {
+        ArrayList<Book> books = _bookManager.getAllBorrowedBooks();
         tvListofObjects.getItems().clear();
         if(books.size() > 0) {
             for (Book book : books) {
@@ -161,13 +242,13 @@ public class ProgramController {
     }
 
     private void getIsBookReturnable(Book selectedBook) {
-        if (selectedBook.getBorrowedTo().getName().contains(_userManager.getActiveUser().getName())) {
+        if (selectedBook.getBorrowedToUser().getName().contains(_userManager.getActiveUser().getName())) {
             btnReturn.setDisable(false);
             setNewStatus("Selected book is borrowed by You");
         } else {
             btnReturn.setDisable(true);
             if (_userManager.getActiveUserRights() == UserRights.ADMIN)
-                setNewStatus("Selected book is borrowed by " + selectedBook.getBorrowedTo().getName());
+                setNewStatus("Selected book is borrowed by " + selectedBook.getBorrowedToUser().getName());
         }
     }
 
@@ -183,7 +264,10 @@ public class ProgramController {
     }
 
     public void onSearch_Click(MouseEvent mouseEvent) {
-        searchBooks();
+        if(activeTable.contains("Book"))
+            searchBooks();
+        else
+            searchUsers();
     }
 
     public void onMyBorrowedBooks_Click(MouseEvent mouseEvent) {
@@ -206,13 +290,66 @@ public class ProgramController {
         stage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 setNewStatus("test");
-               /* Book getNewBookBeforeClose = controller.getNewBook();
+                Book getNewBookBeforeClose = controller.getNewBook();
                 if(getNewBookBeforeClose != null){
                     _bookManager.add(getNewBookBeforeClose);
                     displayBookTable();
-                }*/
+                    searchBooks();
+                }
             }
         });
     }
-}
 
+    public void onRemoveBook_Click(MouseEvent mouseEvent) {
+        Book selectedBook = (Book)tvListofObjects.getSelectionModel().getSelectedItem();
+        _bookManager.removeBook(selectedBook);
+        dispBooks();
+    }
+
+    public void onDispBooks_Click(MouseEvent mouseEvent) {
+        dispBooks();
+    }
+
+    public void onDispBorrowedBooks_Click(MouseEvent mouseEvent) {
+        if(activeTable != "BorrowedBook") {
+            displayBorrowedBookTable();
+            activeTable = "BorrowedBook";
+        }
+        dispBorrowedBooks();
+    }
+
+
+
+    private void dispBooks(){
+        if(activeTable != "Book") {
+            displayBookTable();
+            activeTable = "Book";
+        }
+        searchBooks();
+    }
+
+    public void onDispUsers_Click(MouseEvent mouseEvent) {
+        dispUsers();
+    }
+
+    private void dispUsers(){
+        if(activeTable != "User") {
+            displayUserTable();
+            activeTable = "User";
+        }
+        searchUsers();
+    }
+
+
+
+}
+/*
+ persons.sort((p1, p2) ->
+ { return p1.getAge() - p2.getAge(); });
+
+ persons.sort((p1, p2) -> p1.getAge() - p2.getAge());
+
+person.sort((p1, p2) -> p1.getName().compareTo(p2.getName());
+
+
+*/

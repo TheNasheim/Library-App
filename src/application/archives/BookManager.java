@@ -12,8 +12,7 @@ public class BookManager {
     private ArrayList<Book> books;
 
     public BookManager() {
-       // loadBooks();
-        books = new ArrayList<>();
+        loadBooks();
     }
 
     public void add(Book bookIn){
@@ -65,12 +64,25 @@ public class BookManager {
             }
         }
     }
+
     public ArrayList<Book> getMyBorrowedBooks(User activeUser) {
         ArrayList<Book> otherBooks = new ArrayList<>();
         for(Book book : books){
-            if(book.getBorrowedTo() == activeUser) otherBooks.add(book);
+            if(book.getBorrowedToUser() == activeUser) otherBooks.add(book);
         }
         return otherBooks;
+    }
+
+    public ArrayList<Book> getAllBorrowedBooks() {
+        ArrayList<Book> borrowedBooks = new ArrayList<>();
+        for(Book book : books){
+            if(book.getBorrowedToUser() != null) borrowedBooks.add(book);
+        }
+        return borrowedBooks;
+    }
+
+    public void removeBook(Book book){
+        books.remove(book);
     }
 
     public boolean borrowSelectedBook(Book selectedBook, User userWhoBorrows) {
