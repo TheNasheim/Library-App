@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class UserManager {
 
     private User activeUser;
-
     private ArrayList<User> users;
 
     public UserManager() {
@@ -41,10 +40,6 @@ public class UserManager {
 
     public void add(User userIn){
         users.add(userIn);
-    }
-
-    public int userCount(){
-        return users.size();
     }
 
     public ArrayList<User>getUsersbyName(String name){

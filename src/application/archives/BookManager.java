@@ -120,15 +120,6 @@ public class BookManager {
         return count;
     }
 
-    public ArrayList<Book> getCategoryOfBooks(String category){
-        ArrayList<Book> booksOut = new ArrayList<>();
-        for(Book book : books){
-            if(book.getCategory().equals(category))
-                booksOut.add(book);
-        }
-        return booksOut;
-    }
-
     public void loadBooks() {
         Path path;
         path = Paths.get("books.src");
@@ -136,7 +127,6 @@ public class BookManager {
             books = (ArrayList<Book>) FileUtility.loadObject("books.src");
         else {
             books = new ArrayList<>();
-            //saveBooks();
         }
     }
 

@@ -193,7 +193,6 @@ public class ProgramController {
                         setStyle("");
                     }
                     else if(item.compareTo(LocalDate.now()) < 0) {
-                        // Format date.
                         setText(String.valueOf(Math.abs(ChronoUnit.DAYS.between(LocalDate.now(), item))) + " days overdue.");
                         setStyle("-fx-background-color: #FFAAAA");
                     }
@@ -309,7 +308,6 @@ public class ProgramController {
             searchBooks();
         else if (tableStatus == TableDisplay.USERS)
             searchUsers();
-
     }
 
     public void onMyBorrowedBooks_Click(MouseEvent mouseEvent) {
@@ -327,7 +325,6 @@ public class ProgramController {
         stage.setScene(new Scene(root, 360 , 450));
         stage.setResizable(false);
         stage.show();
-
         stage.setOnCloseRequest((EventHandler<WindowEvent>) new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
                 ArrayList<Book> getNewBooksBeforeClose = controller.getNewBooks();
@@ -359,7 +356,6 @@ public class ProgramController {
     }
 
     public void onDispUserBorrowedBooks_Click(MouseEvent mouseEvent) {
-
         if(tableStatus == TableDisplay.BOOKS) {
             Book book = (Book) tvListofObjects.getSelectionModel().getSelectedItem();
             setNewStatus("Displaying user borrowed books.");
@@ -387,7 +383,6 @@ public class ProgramController {
             buttonEvent();
         }
     }
-
 
     private void dispBooks(){
         if(tableStatus != TableDisplay.BOOKS) {
@@ -430,7 +425,7 @@ public class ProgramController {
             btnDispUsers.setDisable(true);
             btnDispUserBorrowedBooks.setDisable(false);
         }
-        else if(tableStatus == TableDisplay.BORROWEDBOOKS){
+        else if(tableStatus == TableDisplay.BORROWEDBOOKS) {
             btnRead.setDisable(true);
             btnBorrow.setDisable(true);
             btnReturn.setDisable(true);
@@ -441,8 +436,6 @@ public class ProgramController {
             btnDispUsers.setDisable(false);
             btnDispUserBorrowedBooks.setDisable(false);
         }
-
     }
-
 }
 
