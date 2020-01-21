@@ -38,32 +38,13 @@ public class UserManager {
             }
         }
     }
-/*
-    public String findUserString(String searchName) {
-        User user;
-        if(users.stream().anyMatch(x -> x.getName().equals(searchName))) {
-            user =  users.stream().filter((d) -> d.getName().equals(searchName)).findFirst().get();
-
-            return user.getName() + "BANAN";
-
-        }
-        return "null";
-    }*/
 
     public void add(User userIn){
         users.add(userIn);
     }
 
-    public void removeAtIndex(int index){
-        users.remove(index);
-    }
-
     public int userCount(){
         return users.size();
-    }
-
-    public void fillUsers(ArrayList<User> usersIn){
-        users = usersIn;
     }
 
     public ArrayList<User>getUsersbyName(String name){
@@ -87,10 +68,6 @@ public class UserManager {
     }
 
     public UserRights getActiveUserRights() { return activeUser.getRights(); }
-
-    public ArrayList<User> getAllUsers(){
-        return users;
-    }
 
     public void loadUsers() {
         Path path = Paths.get("users.src");

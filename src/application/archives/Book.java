@@ -43,8 +43,7 @@ public class Book implements Serializable {
             setAvailable(false);
             _BorrowedToUser = borrowedTo;
             _borrowedToName = borrowedTo.getName();
-            //_returnDate = LocalDate.now().plusDays(14);
-            _returnDate = LocalDate.now().minusDays(14);
+            _returnDate = LocalDate.now().plusDays(14);
         }
     }
 

@@ -41,8 +41,6 @@ public class ProgramController {
     public Button btnDispUsers;
     public Button btnDispBorrowedBooks;
 
-
-
     private BookManager _bookManager;
     private UserManager _userManager;
     private TableDisplay tableStatus;
@@ -117,9 +115,6 @@ public class ProgramController {
         searchBooks();
     }
 
-    /**
-     *
-     */
     private void searchBooks(){
         String search = txtSearch.getText();
         boolean available = cbAvailable.isSelected();
@@ -277,8 +272,12 @@ public class ProgramController {
         btnBorrow.setDisable(!selectedBook.getAvailable());
         if(!selectedBook.getAvailable()){
             getIsBookReturnable(selectedBook);
+            btnDispUserBorrowedBooks.setDisable(false);
         }
-        else setNewStatus("");
+        else {
+            setNewStatus("");
+            btnDispUserBorrowedBooks.setDisable(true);
+        }
     }
 
     private void getIsBookReturnable(Book selectedBook) {
@@ -310,20 +309,13 @@ public class ProgramController {
             searchBooks();
         else if (tableStatus == TableDisplay.USERS)
             searchUsers();
-        //else if (activeTable == TableDisplay.BORROWEDBOOKS)
 
     }
 
     public void onMyBorrowedBooks_Click(MouseEvent mouseEvent) {
-
         dispBorrowedBooks();
         displayBorrowedBooks(_userManager.getActiveUser());
-        ArrayList<Book> books = _bookManager.getUserBorrowedBooks(_userManager.getActiveUser());
-
         setNewStatus("Displaying user borrowed books.");
-        //dispBooks();
-        //displayBooks(books);
-
     }
 
     public void onAddNewBook_Click(MouseEvent mouseEvent) throws IOException {
@@ -367,22 +359,21 @@ public class ProgramController {
     }
 
     public void onDispUserBorrowedBooks_Click(MouseEvent mouseEvent) {
-        if(tableStatus != TableDisplay.BORROWEDBOOKS) {
-            User user = (User) tvListofObjects.getSelectionModel().getSelectedItem();
-            ArrayList<Book> books = _bookManager.getUserBorrowedBooks(user);
+
+        if(tableStatus == TableDisplay.BOOKS) {
+            Book book = (Book) tvListofObjects.getSelectionModel().getSelectedItem();
             setNewStatus("Displaying user borrowed books.");
-            dispBooks();
-            displayBooks(books);
+            dispBorrowedBooks();
+            displayBorrowedBooks(book.getBorrowedToUser());
+            btnDispUserBorrowedBooks.setDisable(true);
         } else {
             Book book = (Book) tvListofObjects.getSelectionModel().getSelectedItem();
-            ArrayList<Book> books = _bookManager.getUserBorrowedBooks(book.getBorrowedToUser());
             setNewStatus("Displaying user borrowed books.");
-            dispBooks();
-            displayBooks(books);
+            dispBorrowedBooks();
+            displayBorrowedBooks(book.getBorrowedToUser());
         }
+        btnDispUserBorrowedBooks.setDisable(true);
     }
-
-
 
     public void onDispBorrowedBooks_Click(MouseEvent mouseEvent) {
         dispBorrowedBooks();
@@ -395,7 +386,6 @@ public class ProgramController {
             tableStatus = TableDisplay.BORROWEDBOOKS;
             buttonEvent();
         }
-        //displayBorrowedBooks(null);
     }
 
 
@@ -455,13 +445,4 @@ public class ProgramController {
     }
 
 }
-/*
- persons.sort((p1, p2) ->
- { return p1.getAge() - p2.getAge(); });
 
- persons.sort((p1, p2) -> p1.getAge() - p2.getAge());
-
-person.sort((p1, p2) -> p1.getName().compareTo(p2.getName());
-
-
-*/
