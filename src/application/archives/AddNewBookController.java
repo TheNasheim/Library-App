@@ -1,20 +1,14 @@
 package application.archives;
 
-import application.FileUtility;
-import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.util.ArrayList;
 
 public class AddNewBookController {
-
 
     public TextField txtTitle;
     public TextField txtAuthor;
@@ -23,23 +17,18 @@ public class AddNewBookController {
     public Label lblStatus;
     public Button btnSaveAndClose;
 
-    private Book newBook = null;
-    private ArrayList<Book> books;
+    private ArrayList<Book> newBooks = new ArrayList<>();
 
-    public Book getNewBook() {
-        return newBook;
+    public ArrayList<Book> getNewBooks() {
+        return newBooks;
     }
 
     public void onSave_Click(MouseEvent mouseEvent) {
-        //books = FileUtility("")
         if(checkTextFields()) {
-            newBook = new Book(txtTitle.getText(), txtAuthor.getText(), txtCategory.getText(), true, txtSynopsis.getText());
-            final Node source = (Node) mouseEvent.getSource();
-            final Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
-
-            //Stage stage = (Stage) btnSaveAndClose.getScene().getWindow();
-            //stage.close();
+            Book newBook = new Book(txtTitle.getText(), txtAuthor.getText(), txtCategory.getText(), true, txtSynopsis.getText());
+            newBooks.add(newBook);
+            statusText("A new book has been added.");
+            clearTextFields();
         }
     }
 
@@ -58,6 +47,13 @@ public class AddNewBookController {
         else
             filled = true;
         return filled;
+    }
+
+    private void clearTextFields(){
+        txtTitle.setText("");
+        txtAuthor.setText("");
+        txtCategory.setText("");
+        txtSynopsis.setText("");
     }
 
     private void statusText(String status){

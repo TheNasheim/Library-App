@@ -38,7 +38,7 @@ public class UserManager {
             }
         }
     }
-
+/*
     public String findUserString(String searchName) {
         User user;
         if(users.stream().anyMatch(x -> x.getName().equals(searchName))) {
@@ -48,7 +48,7 @@ public class UserManager {
 
         }
         return "null";
-    }
+    }*/
 
     public void add(User userIn){
         users.add(userIn);
@@ -66,16 +66,16 @@ public class UserManager {
         users = usersIn;
     }
 
-    public User getUserbyNamesss(String name){
+    public ArrayList<User>getUsersbyName(String name){
+        ArrayList<User> searchUsers = new ArrayList<>();
+        if(name.length() == 0)
+            return users;
         for(User user : users){
             if(user.getName().contains(name)){
-                return user;
+                searchUsers.add(user);
             }
         }
-        User newUser = new User(name, UserRights.NORMAL);
-        add(newUser);
-        saveUsers();
-        return newUser;
+        return searchUsers;
     }
 
     public User getActiveUser() {

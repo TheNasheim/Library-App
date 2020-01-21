@@ -12,12 +12,12 @@
          <children>
 
              <Rectangle arcHeight="15.0" arcWidth="15.0" fill="WHITE" height="75.0" layoutX="5.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="180.0" />
-             <Label layoutX="10.0" layoutY="10.0" text="User Name:" />
-             <Label layoutX="10.0" layoutY="30.0" text="User Status:" />
-             <Label layoutX="10.0" layoutY="30.0" text="Book Count:" />
-             <Label fx:id="lblUserName" layoutX="80.0" layoutY="10.0" text="lblName" />
-             <Label fx:id="lblUserStatus" layoutX="80.0" layoutY="30.0" text="lblUserStatus" />
-             <Label fx:id="lblBookCounts" layoutX="80.0" layoutY="30.0" text="lblUserStatus" />
+             <Label layoutX="10.0" layoutY="15.0" text="User Name:" />
+             <Label layoutX="10.0" layoutY="35.0" text="User Status:" />
+             <Label layoutX="10.0" layoutY="55.0" text="Total Books:" />
+             <Label fx:id="lblUserName" layoutX="80.0" layoutY="15.0" text="lblName" />
+             <Label fx:id="lblUserStatus" layoutX="80.0" layoutY="35.0" text="lblUserStatus" />
+             <Label fx:id="lblBookCounts" layoutX="80.0" layoutY="55.0" text="lblBookCounts" />
 
              <Rectangle arcHeight="15.0" arcWidth="15.0" fill="WHITE" height="75.0" layoutX="190.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="525.0" />
              <Rectangle arcHeight="10.0" arcWidth="10.0" fill="WHITE" height="65.0" layoutX="195.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="90.0" />
@@ -25,6 +25,7 @@
              <Label layoutX="200.0" layoutY="35.0" text="Show available &#10;books only" textAlignment="CENTER" />
              <TextField fx:id="txtSearch" layoutX="295.0" layoutY="10.0" prefHeight="25.0" prefWidth="232.0" />
              <Button layoutX="535.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onSearch_Click" text="Search" />
+             <Button fx:id="btnDispBooks1" layoutX="482.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#onDispBooks_Click" prefHeight="25.0" prefWidth="105.0" text="Show books"/>
              <Button layoutX="605.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onMyBorrowedBooks_Click" prefHeight="65.0" prefWidth="105.0" text="Show &#10;my borrowed&#10; books" textAlignment="CENTER" />
 
              <Rectangle arcHeight="15.0" arcWidth="15.0" fill="WHITE" height="400.0" layoutX="5.0" layoutY="85.0" stroke="BLACK" strokeType="INSIDE" width="590.0" />
@@ -39,7 +40,7 @@
                 <children>
                     <Label text="     ADMIN Screen   " textAlignment="CENTER" underline="true">
                     <VBox.margin>
-                        <Insets bottom="15.0" />
+                        <Insets bottom="5.0" />
                     </VBox.margin></Label>
                     <Button fx:id="btnAddnewBook" mnemonicParsing="false" onMouseClicked="#onAddNewBook_Click" prefHeight="25.0" prefWidth="105.0" text="Add new book">
                      <VBox.margin>
@@ -47,20 +48,24 @@
                      </VBox.margin></Button>
                     <Button fx:id="btnRemoveBook" mnemonicParsing="false" onMouseClicked="#onRemoveBook_Click" prefHeight="25.0" prefWidth="105.0" text="Remove book">
                     <VBox.margin>
-                        <Insets bottom="25.0" />
+                        <Insets bottom="20.0" />
                     </VBox.margin></Button>
-                    <Button fx:id="btnDispBooks" mnemonicParsing="false" onMouseClicked="#onDispBooks_Click" prefHeight="25.0" prefWidth="105.0" text="Display books">
+                    <Button fx:id="btnDispBooks2" mnemonicParsing="false" onMouseClicked="#onDispBooks_Click" prefHeight="25.0" prefWidth="105.0" text="Display books">
                         <VBox.margin>
                             <Insets bottom="5.0" />
                         </VBox.margin></Button>
              <Button fx:id="btnDispUsers" mnemonicParsing="false" onMouseClicked="#onDispUsers_Click" prefHeight="25.0" prefWidth="105.0" text="Display users">
                  <VBox.margin>
-                     <Insets bottom="5.0" />
+                     <Insets bottom="20.0" />
                  </VBox.margin></Button>
-             <Button fx:id="btnDispBorrowedBooks" mnemonicParsing="false" onMouseClicked="#onDispBorrowedBooks_Click" minHeight="50.0" prefWidth="105.0" text="Show all &#10;borrowed books" textAlignment="CENTER">
+             <Button fx:id="btnDispBorrowedBooks" minHeight="50.0" mnemonicParsing="false" onMouseClicked="#onDispBorrowedBooks_Click" prefWidth="105.0" text="Show all &#10;borrowed books" textAlignment="CENTER">
              <VBox.margin>
                  <Insets bottom="5.0" />
              </VBox.margin></Button>
+                    <Button fx:id="btnDispUserBorrowedBooks" minHeight="50.0" mnemonicParsing="false" onMouseClicked="#onDispUserBorrowedBooks_Click" prefWidth="105.0" text="Display user &#10;borrowed books">
+                        <VBox.margin>
+                            <Insets bottom="5.0" />
+                        </VBox.margin></Button>
                 </children>
              </VBox>
 

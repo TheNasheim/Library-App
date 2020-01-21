@@ -65,10 +65,10 @@ public class BookManager {
         }
     }
 
-    public ArrayList<Book> getMyBorrowedBooks(User activeUser) {
+    public ArrayList<Book> getUserBorrowedBooks(User selectedUser) {
         ArrayList<Book> otherBooks = new ArrayList<>();
         for(Book book : books){
-            if(book.getBorrowedToUser() == activeUser) otherBooks.add(book);
+            if(book.getBorrowedToUser() == selectedUser) otherBooks.add(book);
         }
         return otherBooks;
     }
@@ -99,6 +99,7 @@ public class BookManager {
         }
         return done;
     }
+
     public boolean returnSelectedBook(Book selectedBook) {
         boolean done = false;
         for(Book book : books){
@@ -109,6 +110,14 @@ public class BookManager {
             }
         }
         return done;
+    }
+
+    public int getUserOverdueBooks(User selectedUser){
+        int count = 0;
+        for(Book book : books){
+            if(book.getBorrowedToUser() == selectedUser) count++;
+        }
+        return count;
     }
 
     public ArrayList<Book> getCategoryOfBooks(String category){

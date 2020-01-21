@@ -2,7 +2,7 @@ package application.archives;
 
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class Book implements Serializable {
 
@@ -14,7 +14,7 @@ public class Book implements Serializable {
     private User _BorrowedToUser;
 
     private boolean _available;
-    private Calendar _returnDate;
+    private LocalDate  _returnDate;
 
     public Book(String bookTitle, String authorName, String category, boolean available, String description) {
         _bookTitle = bookTitle;
@@ -37,11 +37,14 @@ public class Book implements Serializable {
         if(borrowedTo == null){
             _BorrowedToUser = null;
             _borrowedToName = "";
+            _returnDate = null;
             setAvailable(true);}
         else{
             setAvailable(false);
             _BorrowedToUser = borrowedTo;
             _borrowedToName = borrowedTo.getName();
+            //_returnDate = LocalDate.now().plusDays(14);
+            _returnDate = LocalDate.now().minusDays(14);
         }
     }
 
@@ -73,12 +76,12 @@ public class Book implements Serializable {
         _description = about;
     }
 
-    public Calendar getReturnDate() {
+    public LocalDate getReturnDate() {
         return _returnDate;
     }
 
-    public void setReturnDate(Calendar returnDate) {
-        this._returnDate = returnDate;
+    public void setReturnDate(String returnDate) {
+        this._returnDate = LocalDate.now().plusDays(Integer.parseInt(returnDate));
     }
 
 }
