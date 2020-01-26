@@ -45,17 +45,26 @@ public class ProgramController {
     private UserManager _userManager;
     private TableDisplay tableStatus;
 
+    /**
+     * The start that is called to fix up the GUI.
+     * @param userManager is taken from login so we dont have to load it again.
+     */
     public void initializeGUI(UserManager userManager){
         vbAdmin.setVisible(false);
         tableStatus = TableDisplay.BOOKS;
         this._userManager = userManager;
         _bookManager = new BookManager();
-        //createNewBooks();
+        createNewBooks();
         buttonEvent();
         displayBookTable();
         displayUserInfo();
+        if(_bookManager.bookCount() <= 0)
+            createNewBooks();
     }
 
+    /**
+     * Displays the correct settings for the user. And warns if there is a book that is overdue.
+     */
     private void displayUserInfo(){
         lblUserName.setText(_userManager.getActiveUser().getName());
         lblUserStatus.setText(_userManager.getActiveUser().getRights().toString());
@@ -66,6 +75,9 @@ public class ProgramController {
         }
     }
 
+    /**
+     * displays the admin version on the GUI.
+     */
     private void adminSetup(){
         vbAdmin.setVisible(true);
     }
@@ -85,6 +97,10 @@ public class ProgramController {
         _bookManager.saveBooks();
     }
 
+    /**
+     * Displays the columns and what is supposed to be in them.
+     * In this case it is the books with some info
+     */
     private void displayBookTable(){
         tvListofObjects.getItems().clear();
         tvListofObjects.getColumns().clear();
@@ -115,6 +131,10 @@ public class ProgramController {
         searchBooks();
     }
 
+    /**
+     * A search on books that adds the text from txtSearch
+     * sends it to bookmanager.
+     */
     private void searchBooks(){
         String search = txtSearch.getText();
         boolean available = cbAvailable.isSelected();
@@ -123,6 +143,10 @@ public class ProgramController {
         displayBooks(books);
     }
 
+    /**
+     * Dispalys the books on the TableView
+     * @param books that is gona be displayed
+     */
     private void displayBooks(ArrayList<Book> books){
         tvListofObjects.getItems().clear();
         if(books.size() > 0) {
@@ -135,6 +159,11 @@ public class ProgramController {
         lblBookCounts.setText(String.valueOf(_bookManager.bookCount()));
     }
 
+    /**
+     * Displays the columns and what is supposed to be in them.
+     * In this case it is the users and what status they have
+     * Could have added a counter on how many books each user has borrowed thou.
+     */
     private void displayUserTable(){
         tvListofObjects.getItems().clear();
         tvListofObjects.getColumns().clear();
@@ -149,12 +178,20 @@ public class ProgramController {
         searchUsers();
     }
 
+    /**
+     * A search on users that adds the text from txtSearch
+     * sends it to usermanager.
+     */
     private void searchUsers(){
         String search = txtSearch.getText();
         ArrayList<User> users = _userManager.getUsersbyName(search);
         displayUsers(users);
     }
 
+    /**
+     * Dispalys the users on the TableView
+     * @param users that is gona be displayed
+     */
     private void displayUsers(ArrayList<User> users){
         tvListofObjects.getItems().clear();
         if(users.size() > 0){
@@ -165,6 +202,10 @@ public class ProgramController {
         }
     }
 
+    /**
+     * Displays the columns and what is supposed to be in them.
+     * In this case it is the borrowed books and there return date.
+     */
     private void displayBorrowedBookTable(){
         tvListofObjects.getItems().clear();
         tvListofObjects.getColumns().clear();
@@ -210,6 +251,10 @@ public class ProgramController {
         searchBooks();
     }
 
+    /**
+     * Dispalys user on the TableView what he/she has borrowed
+     * @param user that is gona be displayed
+     */
     private void displayBorrowedBooks(User user) {
         ArrayList<Book> books;
         if(user == null){
@@ -228,6 +273,9 @@ public class ProgramController {
         }
     }
 
+    /**
+     * Opens a info GUI window with synopsis on the book.
+     */
     public void onReadMore_Click(MouseEvent mouseEvent) throws IOException {
         Book selectedBook = (Book)tvListofObjects.getSelectionModel().getSelectedItem();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("archives/BookInfo.fxml"));
@@ -242,6 +290,9 @@ public class ProgramController {
         stage.show();
     }
 
+    /**
+     * Sets the selected book as borrowed with info about it.
+     */
     public void onBorrow_Click(MouseEvent mouseEvent) {
         Book selectedBook = (Book)tvListofObjects.getSelectionModel().getSelectedItem();
         if(selectedBook.getAvailable()) {
@@ -257,6 +308,9 @@ public class ProgramController {
         searchBooks();
     }
 
+    /**
+     * if the table status is BOOKS then go to function else write empty status.
+     */
     public void tvListofObjects_Click(MouseEvent mouseEvent) {
         if(tableStatus == TableDisplay.BOOKS)
             getIsBookBorrowed();
@@ -265,6 +319,10 @@ public class ProgramController {
         }
     }
 
+    /**
+     * checks if the selected book is borrowed if so turn of borrow button.
+     * Is it the current user that has borrowed the book then enable the button.
+     */
     private void getIsBookBorrowed(){
         btnReturn.setDisable(true);
         Book selectedBook = (Book)tvListofObjects.getSelectionModel().getSelectedItem();
@@ -279,6 +337,10 @@ public class ProgramController {
         }
     }
 
+    /**
+     * checks if the selected book that is borrowed to is the same as the current user
+     * @param selectedBook
+     */
     private void getIsBookReturnable(Book selectedBook) {
         if (selectedBook.getBorrowedToUser().getName().contains(_userManager.getActiveUser().getName())) {
             btnReturn.setDisable(false);
@@ -290,10 +352,18 @@ public class ProgramController {
         }
     }
 
+    /**
+     * Status text.
+     * @param newStatus
+     */
     private void setNewStatus(String newStatus){
         lblStatus.setText("Status: " + newStatus);
     }
 
+    /**
+     * returns the selected book and updates the table.
+     * @param mouseEvent
+     */
     public void onReturn_Click(MouseEvent mouseEvent) {
         Book selectedBook = (Book)tvListofObjects.getSelectionModel().getSelectedItem();
         _bookManager.returnSelectedBook(selectedBook);
@@ -303,6 +373,10 @@ public class ProgramController {
         searchBooks();
     }
 
+    /**
+     * search for books or users depending on there status.
+     * @param mouseEvent
+     */
     public void onSearch_Click(MouseEvent mouseEvent) {
         if(tableStatus == TableDisplay.BOOKS)
             searchBooks();
@@ -310,12 +384,20 @@ public class ProgramController {
             searchUsers();
     }
 
+    /**
+     * Displays all the borrowed books from current user.
+     * @param mouseEvent
+     */
     public void onMyBorrowedBooks_Click(MouseEvent mouseEvent) {
         dispBorrowedBooks();
         displayBorrowedBooks(_userManager.getActiveUser());
         setNewStatus("Displaying user borrowed books.");
     }
 
+    /**
+     * Opens new window to add new books.
+     * and adds a event handler that updates the table when user closes the window.
+     */
     public void onAddNewBook_Click(MouseEvent mouseEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("archives/AddNewBook.fxml"));
         Parent root = fxmlLoader.load();
@@ -340,6 +422,9 @@ public class ProgramController {
         });
     }
 
+    /**
+     * removes the selected book.
+     */
     public void onRemoveBook_Click(MouseEvent mouseEvent) {
         Book selectedBook = (Book)tvListofObjects.getSelectionModel().getSelectedItem();
         _bookManager.removeBook(selectedBook);
@@ -347,14 +432,23 @@ public class ProgramController {
         dispBooks();
     }
 
+    /**
+     * displays all books.
+     */
     public void onDispBooks_Click(MouseEvent mouseEvent) {
         dispBooks();
     }
 
+    /**
+     * Displays all the users.
+     */
     public void onDispUsers_Click(MouseEvent mouseEvent) {
         dispUsers();
     }
 
+    /**
+     * Displays all selected user's borrowed books.
+     */
     public void onDispUserBorrowedBooks_Click(MouseEvent mouseEvent) {
         if(tableStatus == TableDisplay.BOOKS) {
             Book book = (Book) tvListofObjects.getSelectionModel().getSelectedItem();
@@ -371,11 +465,17 @@ public class ProgramController {
         btnDispUserBorrowedBooks.setDisable(true);
     }
 
+    /**
+     * Display borrowed books.
+     */
     public void onDispBorrowedBooks_Click(MouseEvent mouseEvent) {
         dispBorrowedBooks();
         displayBorrowedBooks(null);
     }
 
+    /**
+     * Sets TableDisplay BORROWEDBOOKS
+     */
     private void dispBorrowedBooks(){
         if(tableStatus != TableDisplay.BORROWEDBOOKS) {
             displayBorrowedBookTable();
@@ -384,6 +484,9 @@ public class ProgramController {
         }
     }
 
+    /**
+     * Sets TableDisplay BOOKS
+     */
     private void dispBooks(){
         if(tableStatus != TableDisplay.BOOKS) {
             displayBookTable();
@@ -393,6 +496,9 @@ public class ProgramController {
         searchBooks();
     }
 
+    /**
+     * Sets TableDisplay USERS
+     */
     private void dispUsers(){
         if(tableStatus != TableDisplay.USERS) {
             displayUserTable();
@@ -402,6 +508,9 @@ public class ProgramController {
         searchUsers();
     }
 
+    /**
+     * Disable/Enable selected buttons depending on TableDisplay status
+     */
     private void buttonEvent(){
         if(tableStatus == TableDisplay.BOOKS){
             btnRead.setDisable(false);

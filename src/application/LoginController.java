@@ -21,8 +21,10 @@ public class LoginController {
     @FXML
     public TextField txtUserName;
 
+    /**
+     * Checks the user login.
+     */
     public void btnLoginClick(ActionEvent actionEvent) {
-
         UserManager userManager = new UserManager();
         User user = userManager.getUserbyName(txtUserName.getText());
         userManager.setActiveUser(user);

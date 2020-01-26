@@ -16,6 +16,11 @@ public class UserManager {
         loadUsers();
     }
 
+    /**
+     *
+     * @param searchName userName
+     * @return the selected user
+     */
     public User getUserbyName(String searchName) {
         User user;
         if(users.stream().anyMatch(x -> x.getName().equals(searchName))) {
@@ -38,6 +43,10 @@ public class UserManager {
         }
     }
 
+    /**
+     *
+     * @param userIn add the user to arraylist
+     */
     public void add(User userIn){
         users.add(userIn);
     }
@@ -54,16 +63,31 @@ public class UserManager {
         return searchUsers;
     }
 
+    /**
+     *
+     * @return teh active user
+     */
     public User getActiveUser() {
         return activeUser;
     }
 
+    /**
+     *
+     * @param activeUser sets the active user
+     */
     public void setActiveUser(User activeUser) {
         this.activeUser = activeUser;
     }
 
+    /**
+     *
+     * @return the Admin or normal
+     */
     public UserRights getActiveUserRights() { return activeUser.getRights(); }
 
+    /**
+     * Loads in the user file.
+     */
     public void loadUsers() {
         Path path = Paths.get("users.src");
         if (Files.exists(path))
@@ -74,6 +98,9 @@ public class UserManager {
         }
     }
 
+    /**
+     * saves the user file.
+     */
     public void saveUsers(){
         FileUtility.saveObject("users.src", users, StandardOpenOption.CREATE);
     }

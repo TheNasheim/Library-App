@@ -23,6 +23,9 @@ public class AddNewBookController {
         return newBooks;
     }
 
+    /**
+     * saves the text to a new book.
+     */
     public void onSave_Click(MouseEvent mouseEvent) {
         if(checkTextFields()) {
             Book newBook = new Book(txtTitle.getText(), txtAuthor.getText(), txtCategory.getText(), true, txtSynopsis.getText());
@@ -32,6 +35,9 @@ public class AddNewBookController {
         }
     }
 
+    /**
+     * checks if it is filled in the correct spots.
+     */
     private boolean checkTextFields(){
         boolean filled = false;
         if(txtTitle.getText().length() == 0 && txtAuthor.getText().length() == 0 && txtCategory.getText().length() == 0 && txtSynopsis.getText().length() == 0)
@@ -49,6 +55,9 @@ public class AddNewBookController {
         return filled;
     }
 
+    /**
+     * clears the textboxes.
+     */
     private void clearTextFields(){
         txtTitle.setText("");
         txtAuthor.setText("");
